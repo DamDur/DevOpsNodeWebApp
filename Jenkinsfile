@@ -14,6 +14,15 @@ pipeline {
                     }
                 }
             }
+        }
+        stage('Trigger Render Deployment') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'renderer-deploy-hook', variable: 'KEY')]) {
+                        sh "curl https://api.render.com/deploy/$KEY"
+                    }
+                }
+            }
         }   
     }
 }
